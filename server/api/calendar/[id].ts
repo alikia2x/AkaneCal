@@ -16,12 +16,22 @@ export default defineEventHandler((event) => {
         calDataPath = path.join(dataDir, "calendar", `${id}.json`);
     }
 
-    const calContent = fs.readFileSync(calDataPath, "utf-8");
+    if (fs.existsSync(calDataPath) === false) {
+        throw createError({
+            statusCode: 404,
+            statusMessage: "Calendar not found",
+        })
+    }
+    
     try {
+        const calContent = fs.readFileSync(calDataPath, "utf-8");
         const data = JSON.parse(calContent);
         return data;
-    } catch (e) {
+    } catch (e:any) {
         console.error(e);
-        return null;
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Could not read or parse calendar data',
+        })
     }
 });
