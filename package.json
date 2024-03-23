@@ -8,7 +8,7 @@
         "generate": "nuxt generate",
         "preview": "nuxt preview",
         "postinstall": "nuxt prepare",
-        "start": "PORT=8723 node .output/server/index.mjs"
+        "start": "PORT=8723 dotenv -f .env run node .output/server/index.mjs"
     },
     "dependencies": {
         "dayjs": "^1.11.10",
